@@ -40,3 +40,14 @@
   - req.query
 - How to handle dynamic API
   - req.params
+
+-- season-2 Episode-5
+
+- Multiple route handlers
+- next()
+- next function and errors along with res.send()
+- app.use("/route", rH1, [rH2, rH3, ......], rH23232, .......) // rH: route Handler
+
+- What is middlewares? And why we need it?
+- How express basically handles requests behind the scenes
+- Difference between app.use and app.all

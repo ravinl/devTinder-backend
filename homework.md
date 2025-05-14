@@ -51,3 +51,5 @@
 - What is middlewares? And why we need it?
 - How express basically handles requests behind the scenes
 - Difference between app.use and app.all
+
+- Read about callback / promise / try-catch

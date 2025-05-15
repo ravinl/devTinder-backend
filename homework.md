@@ -53,3 +53,30 @@
 - Difference between app.use and app.all
 
 - Read about callback / promise / try-catch
+
+-- Season-2 Episode-6
+
+- Create a free cluster on MongoDB official website (MongoDB Atlas)
+- install mongoose library
+- connect your application to the database (<"ConnectionURL"/devTinder>)
+- listen to the request only after your database connected successfully
+- create a user schema
+- create userModel
+- Create POST/sign-up API to add data to database
+- Push some documents using API calls using POSTMAN
+- Error handling using Try/Catch
+
+
+-- Season-2 Episode: 7
+
+- JS object VS json (difference)
+- Add the express.json middleware to your app [For What?]
+- Make your sign-up API dynamic to receive the data from the end user
+- If you have more than one data with the same emailId AND you use userModel.findOne({email: value}) which data will be returned?
+- what will be the output for userModel.findOne() [with no conditions]?
+- create API get/user
+- create API get/users
+- create API post/login
+- findAndUpdate / findById and update
+- updateOne [to update one or multiple field of one user]
+- updateMany [to update one or multiple fields of one or more user] ***** Use it when needed *****

@@ -66,7 +66,6 @@
 - Push some documents using API calls using POSTMAN
 - Error handling using Try/Catch
 
-
 -- Season-2 Episode: 7
 
 - JS object VS json (difference)
@@ -79,4 +78,5 @@
 - create API post/login
 - findAndUpdate / findById and update
 - updateOne [to update one or multiple field of one user]
-- updateMany [to update one or multiple fields of one or more user] ***** Use it when needed *****
+- updateMany [to update one or multiple fields of one or more user] **\*** Use it when needed **\***
+- update the user with new emailID [pending]

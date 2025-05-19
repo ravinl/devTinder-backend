@@ -1,128 +1,182 @@
-const mongoose = require("mongoose");
+const { mongoose } = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true,
+    minlength: 1,
+    validator: {
+      validate: (userName) => {
+        return userName.length > 0;
+      },
+      message: "Name cannot be empty.",
+    },
   },
   email: {
     type: String,
     required: true,
     unique: true,
     trim: true,
-    validate: {
-      validator: function (emailByUser) {
-        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]\.[a-zA-Z]{2,}$/.test(
-          emailByUser
+    validator: {
+      validate: (userEmail) => {
+        return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          userEmail
         );
       },
-      message: "Please enter a valid email address",
+      message: "Please enter a valid email address.",
     },
   },
   password: {
     type: String,
     required: true,
-    validate: {
-      validator: function (passByUser) {
-        return /^(?=.*\d)(?=.*\W)(?=.*[A-Z])([A-Za-zA-Z\d\W]{8,})$/.test(
-          passByUser
-        );
+    minlength: 8,
+    validator: {
+      validate: (userPassword) => {
+        return /^(?=.*\d)(?=.*\W)(?=.*[A-Z]).{8,}$/.test(userPassword);
       },
       message:
-        "Password must contains at least one uppercase letter, one number, one special symbol other than _ and must be of 8 or more characters",
+        "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character other than _.",
     },
-  },
-  DOB: {
-    type: Date,
   },
   gender: {
     type: String,
-    enum: ["Male", "Female", "Transgender", "Rather not say"],
+    enum: ["Male", "Female", "Transgender", "Other"],
+  },
+  // TODO: Add profilePhoto and coverPhoto fields here
+  bio: {
+    type: [String],
+    default: [],
+    required: true,
+    validator: {
+      validate: (userBio) => {
+        return userBio.length <= 150;
+      },
+      message:
+        "To make others know about you in quick time, please keep your bio under 150 characters.", // TODO: Add a better message
+    },
   },
   highestQualification: {
     type: String,
-    enum: ["10th", "12th", "Graduation", "Post Graduation", "PhD", "Other"],
     required: true,
-  },
-  skills: {
-    techSkills: {
-      programmingLanguages: {
-        type: [String],
-        required: true,
-        enum: [
-          "C",
-          "JavaScript",
-          "Python",
-          "Java",
-          "C++",
-          "C#",
-          "Ruby",
-          "PHP",
-          "Swift",
-          "Go",
-          "Kotlin",
-          "Rust",
-          "Dart",
-          "TypeScript",
-          "Other",
-        ],
+    validator: {
+      validate: (userQualification) => {
+        return userQualification.length > 0;
       },
-      youAre: {
-        type: [String],
-        required: true,
-        enum: [
-          "Frontend Developer",
-          "Backend Developer",
-          "Full Stack Developer",
-          "Data Scientist",
-          "Machine Learning Engineer",
-          "DevOps Engineer",
-          "Cloud Engineer",
-          "Mobile App Developer",
-          "Game Developer",
-          "Other",
-        ],
-      },
+      message:
+        "If we know about your qualification, we can help you in a better way to find your search.", // TODO: Add a better message
     },
-    softSkills: {
-      type: [String],
-      enum: [
-        "Good Communicator",
-        "Team Player",
-        "Problem Solver",
-        "Adaptable",
-        "Creative",
-        "Other",
-      ],
-    },
-  },
-  experience: {
-    type: [String],
     enum: [
-      "Fresher",
-      "Less than 1 year",
-      "1-2 years",
-      "2-3 years",
-      "3-4 years",
-      "4-5 years",
-      "5+ years",
-    ],
-  },
-  lookingFor: {
-    type: String,
-    enum: [
-      "Coding Partner",
-      "Mentor",
-      "Project Collaborator",
-      "Employer",
-      "Employee",
+      "10th",
+      "12th",
+      "Undergraduate",
+      "Postgraduate",
+      "Doctorate",
       "Other",
     ],
-    required: true,
+  },
+  technicalSkills: {
+    programmingLanguages: {
+      type: [String],
+      default: [],
+      required: true,
+      validator: {
+        validate: (userProgrammingLanguages) => {
+          return userProgrammingLanguages.length > 0;
+        },
+        message:
+          "Please tell us about your programming languages, so that we can help you in a better way to find your search.", // TODO: Add a better message
+      },
+      enum: ["C", "C++", "Java", "Python", "JavaScript", "C#", "Go", "Other"],
+    },
+    library: {
+      type: [String],
+      default: [],
+      enum: ["React", "JQuery", "NumPy", "request", "Other"],
+    },
+    framework: {
+      type: [String],
+      default: [],
+      enum: ["Angular", "Django", "Ruby", ".NET", "Other"],
+    },
+    database: {
+      type: [String],
+      default: [],
+      enum: ["MySQL", "MongoDB", "PostgreSQL", "SQLite", "Oracle", "Other"],
+    },
+    operatingSystem: {
+      computerOperatingSystem: {
+        type: [String],
+        default: [],
+        enum: ["Windows", "Linux", "MacOS", "Other"],
+      },
+      mobileOperatingSystem: {
+        type: [String],
+        default: [],
+        enum: ["Android", "iOS", "Other"],
+      },
+      serverOperatingSystem: {
+        type: [String],
+        default: [],
+        enum: [
+          "Windows Server",
+          "Linux Server",
+          "mac OS Server",
+          "Unix",
+          "Other",
+        ],
+      },
+      otherOperatingSystem: {
+        type: [String],
+      },
+    },
+    versionControl: {
+      type: [String],
+      default: [],
+      enum: ["Git", "Github", "GitLab", "Bitbucket", "Other"],
+    },
+    testing: {
+      type: [String],
+      default: [],
+      enum: ["Selenium", "JUnit", "TestNG", "Other"],
+    },
+    others: {
+      type: [String],
+    },
+  },
+  softSkills: {
+    type: [String],
+    default: [],
+    enum: [
+      "Communication",
+      "Teamwork",
+      "Problem Solving",
+      "Time Management",
+      "Adaptability",
+      "Creativity",
+      "Critical Thinking",
+      "Interpersonal Skills",
+      "Leadership",
+      "Work Ethic",
+      "Attention to Detail",
+      "Other",
+    ],
+  },
+  workExperience: {
+    type: [String],
+    enum: [
+      "Internship",
+      "Fresher",
+      "1-2 Years",
+      "2-3 Years",
+      "3-4 Years",
+      "4-5 Years",
+      "5+ Years",
+      "Other",
+    ],
   },
 });
 
 const userModel = mongoose.model("User", userSchema);
 
-module.exports = {userModel};
+module.exports = { userModel };

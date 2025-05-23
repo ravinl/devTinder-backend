@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     validate: [
       {
         validator: (password) => {
-          return /^(?=.*\W)(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(password);
+          return /^(?=.*\W)(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/.test(password);
         },
         message:
           "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character.",
@@ -95,6 +95,30 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  location: [
+    {
+      city: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      country: {
+        type: String,
+      },
+      pinCode: {
+        type: String,
+        validate: [
+          {
+            validator: (code) => {
+              return /^[1-9][0-9]{5,6}$/.test(code);
+            },
+            message: "Please enter a valid pinCode",
+          },
+        ],
+      },
+    },
+  ],
 });
 
 module.exports = { userSchema };

@@ -5,6 +5,7 @@ const {
   fetchUserHandler,
   fetchUsersHandler,
   deleteUserHandler,
+  updateUserInfoHandler,
 } = require("./handler/index");
 
 const server = express();
@@ -18,6 +19,7 @@ server.post("/api/v1/sign_up", registerUserHandler);
 server.get("/api/v1/user", fetchUserHandler); // TODO: use login authentication middleware before fetching the data
 server.get("/api/v1/users", fetchUsersHandler); // TODO: use admin authentication middleware before fetching the data
 server.put("/api/v1/delete_user", deleteUserHandler);
+server.put("/api/v1/update_profile", updateUserInfoHandler);
 
 connectDB()
   .then(() => {

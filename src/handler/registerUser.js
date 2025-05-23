@@ -2,16 +2,39 @@ const { userModel } = require("../model/user");
 
 const registerUserHandler = async (req, res) => {
   try {
-    console.log("Request body:", req.body);
+    userName = req.body.name;
+    userEmail = req.body.email;
+    userPassword = req.body.password;
+    userGender = req.body.gender;
+    userSkills = req.body.skills;
+    userQualification = req.body.highestQualification;
+    userExperience = req.body.experience;
+
+    const user = new userModel({
+      name: userName,
+      email: userEmail,
+      password: userPassword,
+      gender: userGender,
+      skills: userSkills,
+      highestQualification: userQualification,
+      experience: userExperience,
+    });
+
+    await user.save();
 
     res.status(201).json({
-      message: "User registered successfully",
-      data: req.body,
+      success: true,
+      message: `${user.name} welcome to DevTinder`,
+      data: {
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
-    console.error("Error registering user:", error);
     res.status(500).json({
-      message: "Internal server error",
+      success: false,
+      error: error.message,
+      message: "User Registration Failed",
     });
   }
 };

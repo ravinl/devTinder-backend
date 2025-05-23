@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    maxlength: 50,
     validate: [
       {
         validator: (name) => {
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email is needed for further communication"],
     unique: true,
     lowercase: true,
+    trim: true,
     validate: [
       {
         validator: (email) => {
@@ -31,13 +33,15 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    maxlength: 50,
+    minlength: 8,
     validate: [
       {
         validator: (password) => {
           return /^(?=.*\W)(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\W]{8,}$/.test(password);
         },
         message:
-          "Password must be at least 8 characters long, contain at least one uppercase letter, one number, and one special character.",
+          "Password must contains at-least one uppercase letter, one number one special character and must be between 8 to 50 characters",
       },
     ],
   },

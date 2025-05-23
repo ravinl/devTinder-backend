@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Email is needed for further communication"],
     unique: true,
+    lowercase: true,
     validate: [
       {
         validator: (email) => {
@@ -83,6 +84,7 @@ const userSchema = new mongoose.Schema({
         message: "About section must be less than 500 characters",
       },
     ],
+    default: "Hey there, I am using DevTinder",
   },
   heading: {
     type: String,

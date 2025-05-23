@@ -1,8 +1,15 @@
 const express = require("express");
 const { connectDB } = require("./dataBase/connection");
+const { registerUserHandler } = require("./handler/index");
 
 const server = express();
 const PORT = 3000;
+
+// Middleware to parse JSON requests
+server.use(express.json());
+
+// API routes
+server.post("/api/v1/sign_up", registerUserHandler);
 
 connectDB()
   .then(() => {

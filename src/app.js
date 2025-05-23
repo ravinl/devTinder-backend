@@ -1,6 +1,10 @@
 const express = require("express");
 const { connectDB } = require("./dataBase/connection");
-const { registerUserHandler } = require("./handler/index");
+const {
+  registerUserHandler,
+  fetchUserHandler,
+  fetchUsersHandler,
+} = require("./handler/index");
 
 const server = express();
 const PORT = 3000;
@@ -10,6 +14,8 @@ server.use(express.json());
 
 // API routes
 server.post("/api/v1/sign_up", registerUserHandler);
+server.get("/api/v1/user", fetchUserHandler); // TODO: use login authentication middleware before fetching the data
+server.get("/api/v1/users", fetchUsersHandler); // TODO: use admin authentication middleware before fetching the data
 
 connectDB()
   .then(() => {
